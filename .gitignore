@@ -6,3 +6,5 @@ local.properties
 keystore.properties
 .idea/
 .DS_Store
+build-test/
+app/src/main/AndroidManifest.xml.bak
