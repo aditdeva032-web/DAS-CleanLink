@@ -578,18 +578,9 @@ function renderHistory() {
 }
 
 function openSite(url) {
-  const newTab = window.open(url, "_blank", "noopener,noreferrer");
-
-  if (!newTab) {
-    showMessage(
-      "Tab baru diblokir browser. Izinkan pop-up untuk CleanLink.",
-      "error"
-    );
-    return;
-  }
-
+  // Simpan URL sebelum berpindah halaman.
   saveHistory(url);
-  showMessage("Link dibuka di tab baru.", "success");
+  window.location.assign(url);
 }
 
 form.addEventListener("submit", event => {
