@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b16">
+<title>DAS.CleanLink — Ad-Free Web</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #080b16;
+  --panel: rgba(20, 27, 48, .78);
+  --border: rgba(148, 163, 184, .15);
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --cyan: #22d3ee;
+  --purple: #a78bfa;
+  --green: #34d399;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(ellipse at 15% 15%, #172554 0, transparent 40%),
+    radial-gradient(ellipse at 85% 80%, #31205a 0, transparent 35%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .15;
+  background-image:
+    linear-gradient(rgba(148,163,184,.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148,163,184,.12) 1px, transparent 1px);
+  background-size: 45px 45px;
+  mask-image: linear-gradient(to bottom, black, transparent);
+}
+
+.container {
+  width: min(100% - 32px, 900px);
+  margin: auto;
+  position: relative;
+  z-index: 1;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.7px;
+}
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 12px #22d3ee33);
+}
+
+.brand-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.7px;
+  background: linear-gradient(90deg, #f1f5f9, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.badge {
+  border: 1px solid #34d39944;
+  background: #34d39910;
+  color: var(--green);
+  padding: 8px 12px;
+  border-radius: 30px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.hero {
+  text-align: center;
+  padding: 65px 0 35px;
+  animation: appear .8s ease both;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.eyebrow span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+}
+
+h1 {
+  font-size: clamp(38px, 8vw, 72px);
+  line-height: 1.05;
+  letter-spacing: -3px;
+  font-weight: 800;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #22d3ee, #a78bfa, #f0abfc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero p {
+  max-width: 560px;
+  margin: 22px auto 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.search-card {
+  margin: 25px auto;
+  padding: 24px;
+  max-width: 720px;
+  border: 1px solid var(--border);
+  border-radius: 25px;
+  background: var(--panel);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 25px 80px #0005;
+  animation: appear .9s .15s ease both;
+}
+
+.search-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #cbd5e1;
+  margin-bottom: 12px;
+}
+
+.input-wrap {
+  display: flex;
+  gap: 10px;
+  padding: 8px;
+  background: #080b16;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  transition: .25s;
+}
+
+.input-wrap:focus-within {
+  border-color: var(--cyan);
+  box-shadow: 0 0 0 4px #22d3ee12;
+}
+
+input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  padding: 13px 12px;
+  color: white;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+}
+
+input::placeholder {
+  color: #64748b;
+}
+
+.open-btn {
+  border: 0;
+  border-radius: 11px;
+  padding: 0 22px;
+  background: linear-gradient(135deg, var(--cyan), #818cf8);
+  color: #07111c;
+  font-weight: 800;
+  cursor: pointer;
+  transition: .2s;
+  white-space: nowrap;
+}
+
+.open-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px #22d3ee33;
+}
+
+.open-btn:active {
+  transform: scale(.97);
+}
+
+.message {
+  min-height: 22px;
+  padding-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.message.error {
+  color: #fb7185;
+}
+
+.message.success {
+  color: var(--green);
+}
+
+.features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin: 35px 0;
+}
+
+.feature {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 20px;
+  background: #11182788;
+  transition: .25s;
+}
+
+.feature:hover {
+  transform: translateY(-4px);
+  border-color: #22d3ee55;
+}
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #22d3ee12;
+  color: var(--cyan);
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.feature h3 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.feature p {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.history {
+  margin: 35px 0;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: #11182788;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.section-head h2 {
+  font-size: 16px;
+}
+
+.clear-btn {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.history-list {
+  display: grid;
+  gap: 10px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 12px;
+  background: #080b1680;
+  border: 1px solid #ffffff08;
+}
+
+.history-item .site {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #cbd5e1;
+  font-size: 12px;
+}
+
+.history-item button {
+  border: 0;
+  background: transparent;
+  color: var(--cyan);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.empty {
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.note {
+  border: 1px solid #fbbf2430;
+  background: #fbbf2408;
+  color: #cbd5e1;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.8;
+  margin: 25px 0;
+}
+
+.note strong {
+  color: #fbbf24;
+}
+
+footer {
+  text-align: center;
+  color: #64748b;
+  font-size: 11px;
+  padding: 25px 0 35px;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .hero { padding-top: 45px; }
+  h1 { letter-spacing: -2px; }
+  .search-card { padding: 16px; border-radius: 20px; }
+  .input-wrap { flex-direction: column; }
+  .open-btn { min-height: 48px; }
+  .features { grid-template-columns: 1fr; }
+  .feature { display: flex; gap: 14px; align-items: flex-start; }
+  .feature-icon { flex-shrink: 0; margin: 0; }
+  .feature h3 { margin-top: 2px; }
+  .brand-name {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -.7px;
+  background: linear-gradient(90deg, #f1f5f9, #22d3ee);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.badge { font-size: 9px; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header>
+  <div class="logo">
+    <img class="brand-logo" src="logo.png" alt="DAS logo">
+    <span class="brand-name">DAS.CleanLink</span>
+  </div>
+  <div class="badge">AD-FREE WEB</div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow"><span></span> A cleaner way to browse</div>
+    <h1>Jelajahi web.<br><span class="gradient">Tanpa gangguan.</span></h1>
+    <p>
+      Satu tempat untuk membuka tautan favoritmu.
+      Lebih sederhana, lebih nyaman, dan lebih fokus pada konten.
+    </p>
+  </section>
+
+  <section class="search-card">
+    <label class="search-label" for="urlInput">MASUKKAN ALAMAT WEBSITE</label>
+    <form id="urlForm">
+      <div class="input-wrap">
+        <input
+          id="urlInput"
+          type="text"
+          placeholder="https://contoh.com"
+          autocomplete="url"
+          spellcheck="false"
+          required
+        >
+        <button class="open-btn" type="submit">Buka Situs ↗</button>
+      </div>
+    </form>
+    <div id="message" class="message" aria-live="polite">
+      Masukkan alamat situs yang ingin kamu kunjungi.
+    </div>
+  </section>
+
+  <section class="features">
+    <article class="feature">
+      <div class="feature-icon">⌁</div>
+      <div>
+        <h3>Antarmuka Bersih</h3>
+        <p>Desain minimalis dengan tampilan gelap dan aksen neon.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon">↗</div>
+      <div>
+        <h3>Buka Link Cepat</h3>
+        <p>Akses situs favoritmu melalui satu kolom URL.</p>
+      </div>
+    </article>
+
+    <article class="feature">
+      <div class="feature-icon">◷</div>
+      <div>
+        <h3>Riwayat Lokal</h3>
+        <p>Daftar situs terakhir tersimpan di browser perangkatmu.</p>
+      </div>
+    </article>
+  </section>
+
+  <section class="history">
+    <div class="section-head">
+      <h2>Riwayat Terakhir</h2>
+      <button class="clear-btn" id="clearHistory">Hapus semua</button>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </section>
+
+  <div class="note">
+    <strong>Catatan:</strong> Versi ini adalah pembuka tautan dengan antarmuka CleanLink.
+    Pemblokiran iklan pada situs tujuan belum aktif. Untuk menyaring banner, pop-up,
+    dan permintaan iklan secara nyata, kita akan menambahkan filter melalui browser
+    atau aplikasi Android khusus pada tahap berikutnya.
+  </div>
+</main>
+
+<footer>
+  CLEANLINK · Browse with more focus
+</footer>
+</div>
+
+<script>
+const form = document.getElementById("urlForm");
+const input = document.getElementById("urlInput");
+const message = document.getElementById("message");
+const historyList = document.getElementById("historyList");
+const clearButton = document.getElementById("clearHistory");
+
+let historyItems = [];
+
+try {
+  historyItems = JSON.parse(localStorage.getItem("cleanlink-history") || "[]");
+  if (!Array.isArray(historyItems)) historyItems = [];
+} catch {
+  historyItems = [];
+}
+
+function showMessage(text, type = "") {
+  message.textContent = text;
+  message.className = "message " + type;
+}
+
+function normalizeUrl(value) {
+  let url = value.trim();
+
+  if (!url) return null;
+
+  if (!/^https?:\/\//i.test(url)) {
+    url = "https://" + url;
+  }
+
+  try {
+    const parsed = new URL(url);
+
+    if (!["http:", "https:"].includes(parsed.protocol)) {
+      return null;
+    }
+
+    if (!parsed.hostname.includes(".")) {
+      return null;
+    }
+
+    return parsed.href;
+  } catch {
+    return null;
+  }
+}
+
+function saveHistory(url) {
+  historyItems = [
+    url,
+    ...historyItems.filter(item => item !== url)
+  ].slice(0, 8);
+
+  try {
+    localStorage.setItem(
+      "cleanlink-history",
+      JSON.stringify(historyItems)
+    );
+  } catch {}
+
+  renderHistory();
+}
+
+function renderHistory() {
+  historyList.replaceChildren();
+
+  if (historyItems.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "Belum ada riwayat situs.";
+    historyList.appendChild(empty);
+    return;
+  }
+
+  historyItems.forEach(url => {
+    const item = document.createElement("div");
+    item.className = "history-item";
+
+    const site = document.createElement("div");
+    site.className = "site";
+    site.textContent = url;
+
+    const button = document.createElement("button");
+    button.textContent = "Buka ↗";
+    button.addEventListener("click", () => openSite(url));
+
+    item.append(site, button);
+    historyList.appendChild(item);
+  });
+}
+
+function openSite(url) {
+  const newTab = window.open(url, "_blank", "noopener,noreferrer");
+
+  if (!newTab) {
+    showMessage(
+      "Tab baru diblokir browser. Izinkan pop-up untuk CleanLink.",
+      "error"
+    );
+    return;
+  }
+
+  saveHistory(url);
+  showMessage("Link dibuka di tab baru.", "success");
+}
+
+form.addEventListener("submit", event => {
+  event.preventDefault();
+
+  const url = normalizeUrl(input.value);
+
+  if (!url) {
+    showMessage("Masukkan URL yang valid, misalnya https://example.com", "error");
+    return;
+  }
+
+  openSite(url);
+});
+
+clearButton.addEventListener("click", () => {
+  historyItems = [];
+
+  try {
+    localStorage.removeItem("cleanlink-history");
+  } catch {}
+
+  renderHistory();
+  showMessage("Riwayat berhasil dihapus.");
+});
+
+renderHistory();
+</script>
+</body>
+</html>
